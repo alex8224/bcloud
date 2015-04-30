@@ -30,6 +30,7 @@ from bcloud.DownloadPage import DownloadPage
 from bcloud.HomePage import HomePage
 from bcloud.PreferencesDialog import PreferencesDialog
 from bcloud.SharePage import SharePage
+from bcloud.MySharePage import MySharePage
 from bcloud.SigninDialog import SigninDialog
 from bcloud.TrashPage import TrashPage
 from bcloud.UploadPage import UploadPage
@@ -344,6 +345,10 @@ class App:
         append_page(self.trash_page)
         self.share_page = SharePage(self)
         append_page(self.share_page)
+
+        self.my_share_page = MySharePage(self)
+        append_page(self.my_share_page)
+
         self.cloud_page = CloudPage(self)
         append_page(self.cloud_page)
         self.download_page = DownloadPage(self)

@@ -55,9 +55,9 @@ class PwdDialog(Gtk.Dialog):
 class MySharePage(Gtk.Box):
 
     icon_name = 'emblem-shared-symbolic'
-    disname = _('Share')
-    name = 'SharePage'
-    tooltip = _('Shared files')
+    disname = _('My Shares')
+    name = 'MySharePage'
+    tooltip = _('My Shared files')
     first_run = True
 
     def __init__(self, app):
