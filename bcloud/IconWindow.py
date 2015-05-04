@@ -530,6 +530,8 @@ class IconWindow(Gtk.ScrolledWindow):
                 self.app.toast(_('Failed to share selected files'))
                 return
             self.app.update_clipboard(info['shorturl'])
+            self.app.blink_page(self.app.my_share_page)
+            self.app.my_share_page.load()
 
         tree_paths = self.iconview.get_selected_items()
         if not tree_paths:

@@ -851,3 +851,19 @@ msgstr "同步資料夾:"
 #: ../bcloud/PreferencesDialog.py:115
 msgid "Dest Sync Dir:"
 msgstr "遠端資料夾:"
+
+#: ../bcloud/MySharePage.py:35
+msgid "My Shares"
+msgstr "我的分享"
+
+#: ../bcloud/MySharePage.py:37
+msgid "My Shared files"
+msgstr "我分享的文件"
+
+#: ../bcloud/MySharePage.py:49
+msgid "Copy ShortUrl"
+msgstr "复制分享Url"
+
+#: ../bcloud/MySharePage.py:129
+msgid "ShortUrl"
+msgstr "分享Url"

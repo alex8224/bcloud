@@ -73,6 +73,29 @@ def get_user_info(tokens, uk):
             return info['user_info']
     return None
 
+def list_my_share(cookie, tokens, page=1):
+
+    url = ''.join([
+        const.PAN_URL,
+        'share/record?',
+        '?page=', str(page),
+        '&order=ctime&desc=1',
+        '&_', util.timestamp(),
+        '&bdstoken=', tokens['bdstoken'],
+        '&channel=chunlei&clienttype=0&web=1&app_id=250528',
+        ])
+
+    req = net.urlopen(url, headers={
+        'Cookie': cookie.header_output(),
+        'Referer': const.SHARE_REFERER,
+        })
+
+    if req:
+        content = req.data
+        return json.loads(content.decode())
+    else:
+        return None
+
 def list_share(cookie, tokens, uk, page=1):
     '''获取用户已经共享的所有文件的信息
 
