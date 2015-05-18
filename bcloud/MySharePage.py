@@ -2,17 +2,31 @@
 # Use of this source code is governed by GPLv3 license that can be found
 # in http://www.gnu.org/licenses/gpl-3.0.html
 
+import os
 import time
 
+from gi.repository import GdkPixbuf
+from gi.repository import GLib
+from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
 
 from bcloud import Config
 _ = Config._
+from bcloud import ErrorMsg
+from bcloud.FolderBrowserDialog import FolderBrowserDialog
 from bcloud import gutil
+from bcloud.log import logger
 from bcloud import pcs
+from bcloud import util
 
 (NAME_COL, URL_COL, MTIME_COL, SHARE_ID) = list(range(4))
+REFRESH_ICON = 'view-refresh-symbolic'
+ABORT_ICON = 'edit-delete-symbolic'
+GO_ICON = 'go-next-symbolic'
+ICON_SIZE = 24         # 60x37
+LARGE_ICON_SIZE = 100  # 100x62
+
 
 class MySharePage(Gtk.Box):
 
@@ -26,9 +40,12 @@ class MySharePage(Gtk.Box):
         super().__init__(orientation=Gtk.Orientation.VERTICAL)
         self.app = app
 
+        self.curr_url = ''
+        self.uk = ''
         self.shareid = ''
         self.page = 1  # 从1开始计数
         self.has_next = False
+        self.dirname = ''
 
         if Config.GTK_GE_312:
             self.headerbar = Gtk.HeaderBar()
@@ -208,9 +225,46 @@ class MySharePage(Gtk.Box):
 
     def on_treeview_query_tooltip(self, treeview, x, y, keyboard_mode, tooltip):
         pass
+        # bx, by = treeview.convert_widget_to_bin_window_coords(x, y)
+        # selected = treeview.get_path_at_pos(bx, by)
+        # if not selected:
+            # return
+        # tree_path = selected[0]
+        # if tree_path is None:
+            # return
+
+        # box = Gtk.Box(spacing=5, orientation=Gtk.Orientation.VERTICAL)
+        # image = Gtk.Image.new_from_pixbuf(
+                # self.liststore[tree_path][LARGE_ICON_COL])
+        # image.props.xalign = 0
+        # image.props.halign = Gtk.Align.START
+        # box.pack_start(image, True, True, 0)
+        # if self.liststore[tree_path][NAME_COL] == '..':
+            # label = Gtk.Label(_('Go to parent directory: {0}').format(
+                              # self.liststore[tree_path][PATH_COL]))
+        # else:
+            # label = Gtk.Label(self.liststore[tree_path][PATH_COL])
+        # label.props.max_width_chars = 40
+        # label.props.xalign = 0
+        # label.props.halign = Gtk.Align.START
+        # label.props.wrap_mode = Pango.WrapMode.CHAR
+        # label.props.wrap = True
+        # box.pack_start(label, False, False, 0)
+        # tooltip.set_custom(box)
+        # box.show_all()
+        # return True
 
     def on_treeview_row_activated(self, treeview, tree_path, column):
         pass
+        # if tree_path is None:
+            # return
+
+        # if self.liststore[tree_path][ISDIR_COL]:
+            # dirname = self.liststore[tree_path][PATH_COL]
+            # new_url = pcs.get_share_url_with_dirname(self.uk, self.shareid,
+                                                     # dirname)
+            # self.url_entry.set_text(new_url)
+            # self.reload()
 
     def on_treeview_scrolled(self, adjustment):
         if gutil.reach_scrolled_bottom(adjustment) and self.has_next:
